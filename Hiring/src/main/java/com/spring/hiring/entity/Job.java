@@ -19,7 +19,7 @@ public class Job {
     private String department;
 
     @NotBlank(message = "Job title is mandatory")
-    private String tittle;
+    private String title;
 
     @NotBlank(message = "Job description is mandatory")
     private String description;
@@ -34,14 +34,17 @@ public class Job {
     private JobStatus status=JobStatus.OPEN;
 
     @OneToMany(mappedBy = "job")
+    @JsonIgnore
     private List<JobApplication>applications;
 
     public Job() {
     }
 
-    public Job(String department, String tittle, String description, String location, String requirements, List<JobApplication> applications) {
+
+
+    public Job(String department, String title, String description, String location, String requirements, List<JobApplication> applications) {
         this.department = department;
-        this.tittle = tittle;
+        this.title = title;
         this.description = description;
         this.location = location;
         Requirements = requirements;
@@ -72,12 +75,12 @@ public class Job {
         this.id = id;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

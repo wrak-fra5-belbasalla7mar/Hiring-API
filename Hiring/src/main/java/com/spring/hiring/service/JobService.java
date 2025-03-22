@@ -37,7 +37,7 @@ public class JobService {
         existingJob.setStatus(JobStatus.OPEN);
         existingJob.setRequirements(job.getRequirements());
         existingJob.setLocation(job.getLocation());
-        existingJob.setTittle(job.getTittle());
+        existingJob.setTitle(job.getTitle());
         existingJob.setDescription(job.getDescription());
         return jobRepository.save(existingJob);
     }

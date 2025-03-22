@@ -3,13 +3,12 @@ package com.spring.hiring.controller;
 
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.service.JobService;
-import org.springframework.data.convert.ReadingConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@ReadingConverter
+@RestController
 @RequestMapping("/jobs")
 public class JobController {
 

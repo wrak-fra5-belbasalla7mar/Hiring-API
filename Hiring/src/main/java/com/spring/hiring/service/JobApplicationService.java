@@ -4,6 +4,8 @@ import com.spring.hiring.common.exception.JobApplicationNotFoundException;
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.entity.JobApplication;
 import com.spring.hiring.repository.JobApplicationRepository;
+import com.spring.hiring.repository.JobRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,9 +17,15 @@ import java.util.List;
 public class JobApplicationService {
 
     private final JobApplicationRepository jobApplicationRepository;
+    private final String uploadDir;
+    private final JobRepository jobRepository;
 
-    public JobApplicationService(JobApplicationRepository jobApplicationRepository) {
+    public JobApplicationService(JobApplicationRepository jobApplicationRepository,
+                                 @Value("${file.upload-dir}") String uploadDir,
+                                 JobRepository jobRepository) {
         this.jobApplicationRepository = jobApplicationRepository;
+        this.uploadDir = uploadDir;
+        this.jobRepository = jobRepository;
     }
 
     public JobApplication getJobApplication(long id) {
@@ -34,31 +42,25 @@ public class JobApplicationService {
     }
 
     public JobApplication addJobApplication(Long jobId, Long userId, MultipartFile cvFile) throws IOException {
-        // Validate CV file
         if (cvFile.isEmpty()) {
             throw new IllegalArgumentException("CV file is required");
         }
         if (!cvFile.getContentType().equals("application/pdf")) {
             throw new IllegalArgumentException("CV file must be a PDF");
         }
-        if (cvFile.getSize() > 5 * 1024 * 1024) { // 5MB limit
-            throw new IllegalArgumentException("CV file size must not exceed 5MB");
-        }
-
-        // Save the CV file to the server
-        String uploadDir = "uploads/";
         File dir = new File(uploadDir);
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        String fileName = System.currentTimeMillis() + "_" + cvFile.getOriginalFilename();
-        File file = new File(uploadDir + fileName);
+
+        String fileName = cvFile.getOriginalFilename();
+        File file = new File(uploadDir + File.separator + fileName);
         cvFile.transferTo(file);
 
-        // Create JobApplication
         JobApplication jobApplication = new JobApplication();
         jobApplication.setUserId(userId);
-        jobApplication.setJob(new Job());
+        jobApplication.setJob(jobRepository.findById(jobId).orElseThrow(
+                () -> new JobApplicationNotFoundException("Invalid job with Id: " + jobId)));
         jobApplication.setCv(file.getAbsolutePath());
 
         return jobApplicationRepository.save(jobApplication);
@@ -67,7 +69,7 @@ public class JobApplicationService {
     public String deleteJobApplication(long id) {
         JobApplication application = getJobApplication(id);
         String cvPath = application.getCv();
-        // Delete the CV file from the server
+
         File cvFile = new File(cvPath);
         if (cvFile.exists()) {
             cvFile.delete();
@@ -77,7 +79,7 @@ public class JobApplicationService {
         return "Job application with Id: " + id + " deleted successfully";
     }
 
-    public JobApplication updateJobApplication(JobApplication jobApplication) {
+    public JobApplication update(JobApplication jobApplication) {
         return jobApplicationRepository.save(jobApplication);
     }
 

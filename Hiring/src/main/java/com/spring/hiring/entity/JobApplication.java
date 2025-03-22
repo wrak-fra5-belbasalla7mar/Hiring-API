@@ -3,6 +3,7 @@ package com.spring.hiring.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class JobApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "User Id is required")
+    @NotNull(message = "User Id is required")
     private Long userId;
 
     @NotBlank(message = "Upload CV is required!")

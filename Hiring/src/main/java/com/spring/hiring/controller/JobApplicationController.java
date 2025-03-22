@@ -50,7 +50,7 @@ public class JobApplicationController {
 
     @PutMapping
     public ResponseEntity<JobApplication> updateJobApplication(@Valid @RequestBody JobApplication jobApplication) {
-        return ResponseEntity.ok(jobApplicationService.updateJobApplication(jobApplication));
+        return ResponseEntity.ok(jobApplicationService.update(jobApplication));
     }
 
     @DeleteMapping("/{id}")
@@ -58,7 +58,7 @@ public class JobApplicationController {
         return ResponseEntity.ok(jobApplicationService.deleteJobApplication(id));
     }
 
-    @GetMapping("/{id}/cv")
+    @GetMapping("/cv/{id}")
     public ResponseEntity<Resource> downloadCV(@PathVariable long id) {
         File file = jobApplicationService.getCvFile(id);
         Resource resource = new FileSystemResource(file);
