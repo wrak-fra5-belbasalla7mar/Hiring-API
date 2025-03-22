@@ -1,6 +1,7 @@
 package com.spring.hiring.service;
 
 import com.spring.hiring.common.exception.JobApplicationNotFoundException;
+import com.spring.hiring.common.exception.JobNotFoundException;
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.entity.JobApplication;
 import com.spring.hiring.repository.JobApplicationRepository;
@@ -48,6 +49,13 @@ public class JobApplicationService {
         if (!cvFile.getContentType().equals("application/pdf")) {
             throw new IllegalArgumentException("CV file must be a PDF");
         }
+        Job job=jobRepository.findById(jobId).orElseThrow(
+                ()->new JobNotFoundException("Invalid job with Id: "+jobId));
+
+        if (job.getStatus().equals("CLOSED")){
+            throw new IllegalStateException("Cannot apply to a job that is not open");
+        }
+
         File dir = new File(uploadDir);
         if (!dir.exists()) {
             dir.mkdirs();

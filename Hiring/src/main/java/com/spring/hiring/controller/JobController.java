@@ -40,4 +40,12 @@ public class JobController {
     public ResponseEntity<String> deleteJobById(@PathVariable long id) {
         return ResponseEntity.ok(jobService.deleteJob(id));
     }
+    @PutMapping("/open/{id}")
+    public ResponseEntity<String> openJob(@PathVariable long id) {
+        return ResponseEntity.ok(jobService.openJob(id));
+    }
+    @PutMapping("/close/{id}")
+    public ResponseEntity<String> closeJob(@PathVariable long id) {
+        return ResponseEntity.ok(jobService.closeJob(id));
+    }
 }

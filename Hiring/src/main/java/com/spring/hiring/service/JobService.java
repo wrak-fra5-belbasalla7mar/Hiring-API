@@ -42,9 +42,19 @@ public class JobService {
         return jobRepository.save(existingJob);
     }
 
-
-
-
-
+    public String openJob(long id) {
+        Job job = jobRepository.findById(id).orElseThrow(
+                () -> new JobNotFoundException("Job with id " + id + " does not exist"));
+        job.setStatus(JobStatus.OPEN);
+        jobRepository.save(job);
+        return "Job with id " + id + " has been opened";
+    }
+    public String closeJob(long id) {
+        Job job = jobRepository.findById(id).orElseThrow(
+                () -> new JobNotFoundException("Job with id " + id + " does not exist"));
+        job.setStatus(JobStatus.CLOSED);
+        jobRepository.save(job);
+        return "Job with id " + id + " has been closed";
+    }
 
 }
