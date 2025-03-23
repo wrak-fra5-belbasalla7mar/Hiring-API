@@ -33,8 +33,8 @@ public class JobController {
     }
 
     @PutMapping
-    public ResponseEntity<JobService> updateJob() {
-        return ResponseEntity.ok(jobService);
+    public ResponseEntity<Job> updateJob(@RequestBody Job job) {
+        return ResponseEntity.ok(jobService.updateJob(job));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteJobById(@PathVariable long id) {

@@ -1,6 +1,7 @@
 package com.spring.hiring.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.hiring.utils.JobLocation;
 import com.spring.hiring.utils.JobStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +26,7 @@ public class Job {
     private String description;
 
     @NotBlank(message = "Location is mandatory")
-    private String location;
+    private JobLocation location;
 
     @NotBlank(message = "Requirements are mandatory")
     private String Requirements;
@@ -41,8 +42,7 @@ public class Job {
     }
 
 
-
-    public Job(String department, String title, String description, String location, String requirements, List<JobApplication> applications) {
+    public Job(String department, String title, String description, JobLocation location, String requirements, List<JobApplication> applications) {
         this.department = department;
         this.title = title;
         this.description = description;
@@ -91,11 +91,11 @@ public class Job {
         this.description = description;
     }
 
-    public String getLocation() {
+    public JobLocation getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(JobLocation location) {
         this.location = location;
     }
 
