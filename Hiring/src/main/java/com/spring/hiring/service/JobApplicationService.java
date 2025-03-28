@@ -1,7 +1,7 @@
 package com.spring.hiring.service;
 
-import com.spring.hiring.common.exception.JobApplicationNotFoundException;
-import com.spring.hiring.common.exception.JobNotFoundException;
+import com.spring.hiring.exception.JobApplicationNotFoundException;
+import com.spring.hiring.exception.JobNotFoundException;
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.entity.JobApplication;
 import com.spring.hiring.repository.JobApplicationRepository;
@@ -42,7 +42,7 @@ public class JobApplicationService {
         return jobApplicationRepository.findByJobId(jobId);
     }
 
-    public JobApplication addJobApplication(Long jobId, Long userId, MultipartFile cvFile) throws IOException {
+    public JobApplication addJobApplication(Long jobId, int userId, MultipartFile cvFile) throws IOException {
         if (cvFile.isEmpty()) {
             throw new IllegalArgumentException("CV file is required");
         }

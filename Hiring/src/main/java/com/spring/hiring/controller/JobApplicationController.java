@@ -43,7 +43,7 @@ public class JobApplicationController {
     @PostMapping
     public ResponseEntity<JobApplication> addJobApplication(
             @RequestParam Long jobId,
-            @RequestParam Long userId,
+            @RequestParam int userId,
             @RequestParam("cv_file") MultipartFile cvFile) throws IOException {
         return ResponseEntity.ok(jobApplicationService.addJobApplication(jobId, userId, cvFile));
     }

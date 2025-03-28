@@ -28,8 +28,8 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<Job> addJob(@RequestBody Job job) {
-        return ResponseEntity.ok(jobService.addJob(job));
+    public ResponseEntity<Job> addJob(@RequestBody Job job, @RequestParam int createdBy) {
+        return ResponseEntity.ok(jobService.addJob(job, createdBy));
     }
 
     @PutMapping

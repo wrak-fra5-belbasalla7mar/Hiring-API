@@ -1,12 +1,14 @@
 package com.spring.hiring.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.spring.hiring.utils.JobLocation;
+import com.spring.hiring.utils.Location;
 import com.spring.hiring.utils.JobStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,17 +18,20 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Department is mandatory")
-    private String department;
+
+    private int createdBy;
 
     @NotBlank(message = "Job title is mandatory")
     private String title;
 
+    @NotBlank(message = "Department is mandatory")
+    private String department;
+
     @NotBlank(message = "Job description is mandatory")
     private String description;
 
-    @NotBlank(message = "Location is mandatory")
-    private JobLocation location;
+    @NotNull(message = "Location is mandatory")
+    private Location location= Location.REMOTE;
 
     @NotBlank(message = "Requirements are mandatory")
     private String Requirements;
@@ -34,6 +39,7 @@ public class Job {
     @JsonIgnore
     private JobStatus status=JobStatus.OPEN;
 
+    private LocalDateTime createdAt =LocalDateTime.now();
     @OneToMany(mappedBy = "job")
     @JsonIgnore
     private List<JobApplication>applications;
@@ -41,14 +47,14 @@ public class Job {
     public Job() {
     }
 
-
-    public Job(String department, String title, String description, JobLocation location, String requirements, List<JobApplication> applications) {
-        this.department = department;
+    public Job(int createdBy, String title, String department, String description, Location location, String requirements, LocalDateTime createdAt) {
+        this.createdBy = createdBy;
         this.title = title;
+        this.department = department;
         this.description = description;
         this.location = location;
         Requirements = requirements;
-        this.applications = applications;
+        this.createdAt = createdAt;
     }
 
     public List<JobApplication> getApplications() {
@@ -91,11 +97,11 @@ public class Job {
         this.description = description;
     }
 
-    public JobLocation getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(JobLocation location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -114,4 +120,21 @@ public class Job {
     public void setStatus(JobStatus status) {
         this.status = status;
     }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }

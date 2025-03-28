@@ -1,4 +1,4 @@
-package com.spring.hiring.common.exception;
+package com.spring.hiring.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

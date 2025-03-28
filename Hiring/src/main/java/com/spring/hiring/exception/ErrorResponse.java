@@ -1,4 +1,4 @@
-package com.spring.hiring.common.exception;
+package com.spring.hiring.exception;
 public class ErrorResponse {
     private String message;
     private String error;

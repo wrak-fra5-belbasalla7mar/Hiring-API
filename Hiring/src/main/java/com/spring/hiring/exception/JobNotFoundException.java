@@ -1,4 +1,4 @@
-package com.spring.hiring.common.exception;
+package com.spring.hiring.exception;
 
 public class JobNotFoundException extends RuntimeException {
     public JobNotFoundException(String message) {

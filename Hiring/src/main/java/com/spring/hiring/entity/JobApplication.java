@@ -16,7 +16,7 @@ public class JobApplication {
     private Long id;
 
     @NotNull(message = "User Id is required")
-    private Long userId;
+    private int userId;
 
     @NotBlank(message = "Upload CV is required!")
     private String  cv;
@@ -35,11 +35,11 @@ public class JobApplication {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

@@ -1,6 +1,6 @@
 package com.spring.hiring.utils;
 
-public enum JobLocation {
+public enum Location {
     REMOTE,
     ONSITE,
     HYBRID
