@@ -30,6 +30,7 @@ public class JobApplicationService {
     }
 
     public JobApplication getJobApplication(long id) {
+
         return jobApplicationRepository.findById(id).orElseThrow(
                 () -> new JobApplicationNotFoundException("Invalid job application with Id: " + id));
     }

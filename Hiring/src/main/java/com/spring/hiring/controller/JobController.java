@@ -20,8 +20,14 @@ public class JobController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Job> getJobById(@PathVariable long id) {
-        return ResponseEntity.ok(jobService.getJob(id));
+        return ResponseEntity.ok(jobService.getJobDetails(id));
     }
+
+    @GetMapping("/open")
+    public ResponseEntity<List<Job>>getOpenJobs(){
+        return ResponseEntity.ok(jobService.findOpenJobs());
+    }
+
     @GetMapping
     public ResponseEntity<List<Job>> getAllJobRequests() {
         return ResponseEntity.ok(jobService.getAllJobs());

@@ -1,27 +1,23 @@
 package com.spring.hiring.service;
 
 import com.spring.hiring.client.UserClient;
-import com.spring.hiring.dto.DepartmentDTO;
 import com.spring.hiring.dto.UserDTO;
 import com.spring.hiring.exception.JobNotFoundException;
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.repository.JobRepository;
 import com.spring.hiring.utils.JobStatus;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+
 @Service
 public class JobService {
 
     private final JobRepository jobRepository;
     private final UserClient userClient;
-
-    @Value("${hr.department.id}")
-    private  int hrDepartmentId;
 
 
     public JobService(JobRepository jobRepository, UserClient userClient) {
@@ -37,23 +33,22 @@ public class JobService {
         if (!Objects.equals(user.getDepartment().getName(), "HR")) {
             throw new IllegalArgumentException("Only users in the HR department can post jobs");
         }
-
             job.setCreatedBy(createdBy);
             job.setCreatedAt(LocalDateTime.now());
             job.setStatus(JobStatus.OPEN);
             job.setLocation(job.getLocation());
             job.setDepartment(job.getDepartment());
             return jobRepository.save(job);
-
     }
 
-    public Job getJob(long id) {
+    public Job getJobDetails(long id) {
         return jobRepository.findById(id).orElseThrow(
                 () -> new JobNotFoundException("Job with id " + id + " does not exist")
         );
     }
 
     public List<Job> getAllJobs() {
+
         return jobRepository.findAll();
     }
 
@@ -63,6 +58,7 @@ public class JobService {
     }
 
     public Job updateJob(Job job) {
+
         Job existingJob = jobRepository.findById(job.getId()).orElseThrow(
                 () -> new JobNotFoundException("Job with id " + job.getId() + " does not exist"));
         existingJob.setTitle(job.getTitle());
@@ -88,5 +84,10 @@ public class JobService {
         job.setStatus(JobStatus.CLOSED);
         jobRepository.save(job);
         return "Job with id " + id + " has been closed";
+    }
+
+    public List<Job> findOpenJobs() {
+        return jobRepository.findByOpenStatus();
+
     }
 }
