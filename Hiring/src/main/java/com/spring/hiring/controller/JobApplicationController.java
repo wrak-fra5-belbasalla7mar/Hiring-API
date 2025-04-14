@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("applications")
@@ -54,8 +56,11 @@ public class JobApplicationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteJobApplication(@PathVariable long id) {
-        return ResponseEntity.ok(jobApplicationService.deleteJobApplication(id));
+    public ResponseEntity<Map<String, String>> deleteApplication(@PathVariable Long id) {
+        jobApplicationService.deleteJobApplication(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Application deleted successfully!");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/cv/{id}")

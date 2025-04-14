@@ -40,7 +40,7 @@ public class Job {
     private JobStatus status=JobStatus.OPEN;
 
     private LocalDateTime createdAt =LocalDateTime.now();
-    @OneToMany(mappedBy = "job")
+    @OneToMany(mappedBy = "job",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<JobApplication>applications;
 

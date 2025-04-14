@@ -6,13 +6,15 @@ import com.spring.hiring.service.JobService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
 
-    private  final JobService jobService;
+    private final JobService jobService;
 
     public JobController(JobService jobService) {
         this.jobService = jobService;
@@ -24,7 +26,7 @@ public class JobController {
     }
 
     @GetMapping("/open")
-    public ResponseEntity<List<Job>>getOpenJobs(){
+    public ResponseEntity<List<Job>> getOpenJobs() {
         return ResponseEntity.ok(jobService.findOpenJobs());
     }
 
@@ -33,25 +35,49 @@ public class JobController {
         return ResponseEntity.ok(jobService.getAllJobs());
     }
 
-    @PostMapping
-    public ResponseEntity<Job> addJob(@RequestBody Job job, @RequestParam int createdBy) {
-        return ResponseEntity.ok(jobService.addJob(job, createdBy));
+    @GetMapping("/creator/{userId}")
+    public ResponseEntity<List<Job>> getJobsByCreator(@PathVariable Long userId) {
+        return ResponseEntity.ok(jobService.findJobsByCreator(userId));
     }
 
+
+    @PostMapping
+    public ResponseEntity<Job> addJob(@RequestBody Job job, @RequestParam int createdBy) {
+        job.setCreatedBy(createdBy);
+        return ResponseEntity.ok(jobService.addJob(job, createdBy));
+    }
     @PutMapping
     public ResponseEntity<Job> updateJob(@RequestBody Job job) {
         return ResponseEntity.ok(jobService.updateJob(job));
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteJobById(@PathVariable long id) {
-        return ResponseEntity.ok(jobService.deleteJob(id));
+    public ResponseEntity<Map<String, String>> deleteJob(@PathVariable Long id) {
+        jobService.deleteJob(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Job deleted successfully!");
+        return ResponseEntity.ok(response);
     }
     @PutMapping("/open/{id}")
-    public ResponseEntity<String> openJob(@PathVariable long id) {
-        return ResponseEntity.ok(jobService.openJob(id));
+    public ResponseEntity<Map<String, String>> openJob(@PathVariable long id) {
+        jobService.openJob(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Job opened successfully!");
+        return ResponseEntity.ok(response);
     }
     @PutMapping("/close/{id}")
-    public ResponseEntity<String> closeJob(@PathVariable long id) {
-        return ResponseEntity.ok(jobService.closeJob(id));
+    public ResponseEntity<Map<String, String>> closeJob(@PathVariable long id) {
+        jobService.closeJob(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Job closed successfully!");
+        return ResponseEntity.ok(response);
     }
 }
+
+
+
+
+
+
+
+

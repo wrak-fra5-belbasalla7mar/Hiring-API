@@ -13,4 +13,5 @@ public interface JobRepository extends JpaRepository<Job,Long> {
     default List<Job> findByOpenStatus() {
         return findByStatus(JobStatus.OPEN);
     }
+    List<Job> findByCreatedBy(Long createdBy);
 }

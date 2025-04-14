@@ -85,7 +85,9 @@ public class JobService {
         jobRepository.save(job);
         return "Job with id " + id + " has been closed";
     }
-
+    public List<Job> findJobsByCreator(Long userId) {
+        return jobRepository.findByCreatedBy(userId);
+    }
     public List<Job> findOpenJobs() {
         return jobRepository.findByOpenStatus();
 
