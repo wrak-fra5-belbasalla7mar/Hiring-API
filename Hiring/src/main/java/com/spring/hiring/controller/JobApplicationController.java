@@ -3,6 +3,7 @@ package com.spring.hiring.controller;
 import com.spring.hiring.entity.JobApplication;
 import com.spring.hiring.service.JobApplicationService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -19,13 +20,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("applications")
+@RequiredArgsConstructor
 public class JobApplicationController {
 
     private final JobApplicationService jobApplicationService;
 
-    public JobApplicationController(JobApplicationService jobApplicationService) {
-        this.jobApplicationService = jobApplicationService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<JobApplication> getJobApplication(@PathVariable long id) {

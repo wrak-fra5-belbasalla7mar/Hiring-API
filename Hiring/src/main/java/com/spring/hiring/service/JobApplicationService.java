@@ -19,6 +19,7 @@ public class JobApplicationService {
 
     private final JobApplicationRepository jobApplicationRepository;
     private final String uploadDir;
+
     private final JobRepository jobRepository;
 
     public JobApplicationService(JobApplicationRepository jobApplicationRepository,

@@ -3,6 +3,7 @@ package com.spring.hiring.controller;
 
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.service.JobService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/jobs")
+@RequiredArgsConstructor
 public class JobController {
 
     private final JobService jobService;
-
-    public JobController(JobService jobService) {
-        this.jobService = jobService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Job> getJobById(@PathVariable long id) {

@@ -6,6 +6,7 @@ import com.spring.hiring.exception.JobNotFoundException;
 import com.spring.hiring.entity.Job;
 import com.spring.hiring.repository.JobRepository;
 import com.spring.hiring.utils.JobStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,16 +15,13 @@ import java.util.Objects;
 
 
 @Service
+@RequiredArgsConstructor
 public class JobService {
 
     private final JobRepository jobRepository;
     private final UserClient userClient;
 
 
-    public JobService(JobRepository jobRepository, UserClient userClient) {
-        this.jobRepository = jobRepository;
-        this.userClient = userClient;
-    }
 
     public Job addJob(Job job, int createdBy) {
         UserDTO user = userClient.getUserById(createdBy).block();
